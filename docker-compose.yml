@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  mongodb5:
+    hostname: mongodb5
+    container_name: mongodb5
+    image: mongo:5.0
+    ports:
+      - 27017:27017
+    restart: always
+    networks:
+      - mongodb
+  mongodb-build:
+    build: ./build/.
+    hostname: mongodb-build
+    container_name: mongodb-build
+    networks:
+      - mongodb
+    depends_on:
+      - mongodb5
+networks:
+  mongodb:
