@@ -162,7 +162,7 @@ class UnparkHistories {
 
 		return {
 			payable: flatRate.rate + Math.ceil(unParkTimeDiff) * parkingSlotRate,
-			isFlatRateConsumed
+			isFlatRateConsumed: true
 		};
 	}
 
