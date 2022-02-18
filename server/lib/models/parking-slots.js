@@ -39,7 +39,7 @@ class ParkingSlots {
 			},
 			{
 				sort: {
-					[`distances.${entryPointId}`]: 1,
+					[`distances.${new ObjectId(entryPointId)}`]: 1,
 					type: 1
 				}
 			}

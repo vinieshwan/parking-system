@@ -13,6 +13,9 @@ checkServerStatus(){
 	done
 }
 
+
+if [ $NO_OF_ENTRYPOINTS -lt 3 ]; then exit 0; fi
+
 checkServerStatus "mongodb5" "27017"
 
 sleep 10

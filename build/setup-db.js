@@ -10,6 +10,7 @@ const {
 	NO_OF_SLOT_TYPE,
 	NO_OF_SLOTS_PER_TYPE
 } = process.env;
+const { exit } = require('process');
 const {
 	entryPoints,
 	parkingComplex,
@@ -58,6 +59,26 @@ for (let i = 0; i < 4; i++) {
 
 Promise.all(collectionSetup)
 	.then(() => {
+		db.entryPoints.createIndex({
+			parkingComplexId: 1
+		});
+
+		db.parkingComplex.createIndex({
+			name: 1
+		});
+
+		db.parkingHistories.createIndex({
+			plateNumber: 1,
+			parkTime: 1
+		});
+
+		db.parkingSlots.createIndex({
+			parkingComplexId: 1,
+			type: 1,
+			isOccupied: 1,
+			distances: 1
+		});
+
 		const parkingComplexReturn =
 			db.parkingComplex.insertOne(parkingComplexSeed);
 
@@ -91,7 +112,11 @@ Promise.all(collectionSetup)
 				let innerCount = 0;
 
 				for (let item in entryPointsReturn.insertedIds) {
-					const entryPointId = entryPointsReturn.insertedIds[item].toString();
+					const entryPointId = entryPointsReturn.insertedIds[item];
+					db.parkingComplex.findOneAndUpdate(
+						{ _id: parkingComplexReturn.insertedId },
+						{ $addToSet: { entryPoints: entryPointId } }
+					);
 
 					singleParkingSlot.distances[entryPointId] =
 						slotDistances[outerCount][innerCount];
@@ -105,7 +130,15 @@ Promise.all(collectionSetup)
 			}
 		}
 
-		db.parkingSlots.insertMany(parkingSlotsData);
+		const parkingSlotsReturn = db.parkingSlots.insertMany(parkingSlotsData);
+
+		for (let item in parkingSlotsReturn.insertedIds) {
+			const parkingSlotId = parkingSlotsReturn.insertedIds[item];
+			db.parkingComplex.findOneAndUpdate(
+				{ _id: parkingComplexReturn.insertedId },
+				{ $addToSet: { parkingSlots: parkingSlotId } }
+			);
+		}
 
 		console.log('\n\n\n\n\n=====> DONE BUILDING!!! <======\n\n\n\n\n');
 	})

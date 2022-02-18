@@ -2,8 +2,6 @@ module.exports = {
 	bsonType: 'object',
 	required: [
 		'name',
-		'noOfSlots',
-		'noOfEntryPoints',
 		'flatRate',
 		'continuousHourThreshold',
 		'dayRate',
@@ -15,13 +13,13 @@ module.exports = {
 			bsonType: 'string',
 			description: 'Name of the parking complex.'
 		},
-		noOfSlots: {
-			bsonType: 'int',
-			description: 'Number of slots a parking complex can cater.'
+		parkingSlots: {
+			bsonType: 'array',
+			description: 'Contains list of parking slot ids.'
 		},
-		noOfEntryPoints: {
-			bsonType: 'int',
-			description: 'Number of entry points a parking complex can have.'
+		entryPoints: {
+			bsonType: 'array',
+			description: 'Contains list of entry points ids.'
 		},
 		flatRate: {
 			bsonType: 'object',

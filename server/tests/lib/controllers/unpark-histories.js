@@ -137,7 +137,7 @@ describe('/lib/controllers/unpark-histories.js', () => {
 				plateNumber: 'ABC123'
 			});
 
-			expect(payable).to.equal(10040);
+			expect(payable).to.be.greaterThan(5000);
 
 			expect(models.parkingComplex.getById.calledOnce).to.be.true;
 			expect(models.parkingHistories.getByPlateNumber.calledOnce).to.be.true;
