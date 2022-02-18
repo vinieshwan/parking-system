@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'Ayala Mall Parking Complex',
-	noOfSlots: 12,
-	noOfEntryPoints: 3,
+	parkingSlots: [],
+	entryPoints: [],
 	flatRate: {
 		rate: 40,
 		hours: 3
