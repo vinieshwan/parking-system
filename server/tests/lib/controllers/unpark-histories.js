@@ -25,19 +25,21 @@ describe('/lib/controllers/unpark-histories.js', () => {
 		updatedAt: new Date()
 	};
 
-	const parkingHistory = {
-		_id: '620b146162d0ff825d5f46ee',
-		plateNumber: 'AGL5251',
-		vehicleType: 0,
-		parkingSlotType: 0,
-		parkingSlotRate: 20,
-		parkingSlotId: '620b146162d0ff825d5f46ef',
-		entryPointId: '620b146162d0ff825d5f46ea',
-		parkingComplexId: '620b146162d0ff825d5f46ec',
-		parkTime: new Date('2022-02-15T02:48:00.552+00:00'),
-		isContinuous: false,
-		isFlatRateConsumed: false
-	};
+	const parkingHistory = [
+		{
+			_id: '620b146162d0ff825d5f46ee',
+			plateNumber: 'AGL5251',
+			vehicleType: 0,
+			parkingSlotType: 0,
+			parkingSlotRate: 20,
+			parkingSlotId: '620b146162d0ff825d5f46ef',
+			entryPointId: '620b146162d0ff825d5f46ea',
+			parkingComplexId: '620b146162d0ff825d5f46ec',
+			parkTime: new Date('2022-02-15T02:48:00.552+00:00'),
+			isContinuous: false,
+			isFlatRateConsumed: false
+		}
+	];
 
 	before(async () => {
 		models = await getModels();
@@ -362,6 +364,9 @@ describe('/lib/controllers/unpark-histories.js', () => {
 		});
 
 		it('should return payable for continuous rate if flat rate is already consumed', () => {
+			historyDetails.previousUnparkTime = new Date(
+				'2022-02-15T02:50:00.552+00:00'
+			);
 			historyDetails.isFlatRateConsumed = true;
 
 			const fee = UnparkHistoriesController.calculateContinuousRate(

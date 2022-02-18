@@ -283,11 +283,11 @@ describe('/lib/models/parking-histories.js', () => {
 				parkingDetails.plateNumber
 			);
 
-			expect(log).to.be.an('object');
-			assert.match(log._id, /^[A-Fa-f0-9]{24}$/);
-			delete log._id;
+			expect(log).to.be.an('array');
+			assert.match(log[0]._id, /^[A-Fa-f0-9]{24}$/);
+			delete log[0]._id;
 
-			expect(log).to.deep.equal(parkingDetails);
+			expect(log[0]).to.deep.equal(parkingDetails);
 		});
 
 		it('should retrieve the latest parking history log', async () => {
@@ -303,23 +303,25 @@ describe('/lib/models/parking-histories.js', () => {
 				parkingDetails.plateNumber
 			);
 
-			expect(log).to.be.an('object');
-			assert.match(log._id, /^[A-Fa-f0-9]{24}$/);
-			delete log._id;
+			expect(log).to.be.an('array');
+			assert.match(log[0]._id, /^[A-Fa-f0-9]{24}$/);
+			delete log[0]._id;
 
-			expect(log).to.deep.equal(parkingDetails);
+			expect(log[0]).to.deep.equal(parkingDetails);
 		});
 
 		it('should return null if no vehicle parking history retrieved', async () => {
 			const log = await parkingHistoriesModel.getByPlateNumber('AGL5252');
 
-			expect(log).to.deep.equal(null);
+			expect(log).to.deep.equal([]);
 		});
 
 		it('should throw error if there was an error occurred while logging parking history', async () => {
-			sandbox
-				.stub(parkingHistoriesModel.collection, 'findOne')
-				.rejects(new Error('Error'));
+			sandbox.stub(parkingHistoriesModel.collection, 'find').callsFake(() => {
+				return {
+					toArray: sandbox.stub().rejects(new Error('Error'))
+				};
+			});
 
 			let error;
 

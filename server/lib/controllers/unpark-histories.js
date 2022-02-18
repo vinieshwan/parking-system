@@ -38,9 +38,12 @@ class UnparkHistories {
 		const { plateNumber, unparkTime = new Date() } = details;
 
 		try {
-			const parkHistory = await this.models.parkingHistories.getByPlateNumber(
-				plateNumber
-			);
+			const [parkHistory, previousParkingHistory] =
+				await this.models.parkingHistories.getByPlateNumber(plateNumber, 2);
+
+			if (previousParkingHistory) {
+				parkHistory.previousUnparkTime = previousParkingHistory.unparkTime;
+			}
 
 			if (parkHistory === null) {
 				throw new NotFoundError('parking history not found');
@@ -185,13 +188,16 @@ class UnparkHistories {
 			initialParkTime,
 			isFlatRateConsumed,
 			parkingSlotRate,
-			unParkTime
+			unParkTime,
+			previousUnparkTime
 		} = historyDetails;
 
 		const { flatRate, dayRate } = parkingComplexDetails;
 
 		if (isFlatRateConsumed) {
-			const unParkTimeDiff = Math.ceil(timeDiffInHour(unParkTime, parkTime));
+			const unParkTimeDiff = Math.ceil(
+				timeDiffInHour(unParkTime, previousUnparkTime)
+			);
 
 			return {
 				payable: unParkTimeDiff * parkingSlotRate,
