@@ -13,7 +13,7 @@ _\* `Please note that this system is developed under node v16.13.1`_
    cd server
    npm install
    ```
-3. Go to client directory
+3. Install NPM packages in the client directory
    ```sh
    cd client
    npm install
@@ -21,8 +21,16 @@ _\* `Please note that this system is developed under node v16.13.1`_
 
 ### Usage Guide
 
+- Build necessary data:
+  ```sh
+  docker-compose up --build
+  ```
+- To run the docker container in the background:
+  ```sh
+  docker-compose up -d
+  ```
 - To run both server and client:<br />
-  Under the main directory run the following:
+  Under the main directory run the following:<br />
   ```sh
   npm start
   ```
