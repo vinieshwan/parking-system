@@ -310,7 +310,7 @@ describe('/lib/controllers/unpark-histories.js', () => {
 				parkingDetails
 			);
 
-			expect(fee).to.deep.equal({ payable: 80, isFlatRateConsumed: false });
+			expect(fee).to.deep.equal({ payable: 80, isFlatRateConsumed: true });
 		});
 
 		it('should return payable for normal rate if time is within the flat rate threshold', () => {
