@@ -8,14 +8,20 @@ _\* `Please note that this system is developed under node v16.13.1`_
    ```sh
    git clone https://github.com/vinieshwan/parking-system
    ```
-2. Install NPM packages
+2. Install NPM packages in the server directory
    ```sh
+   cd server
+   npm install
+   ```
+3. Go to client directory
+   ```sh
+   cd client
    npm install
    ```
 
 ### Usage Guide
 
-- To run both server and client:
+- To run both server and client:<br />
   Under the main directory run the following:
   ```sh
   npm start
