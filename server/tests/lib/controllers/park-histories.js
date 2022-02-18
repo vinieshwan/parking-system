@@ -41,17 +41,19 @@ describe('/lib/controllers/park-histories.js', () => {
 		updatedAt: new Date()
 	};
 
-	const parkingHistory = {
-		plateNumber: 'AGL5251',
-		vehicleType: 0,
-		parkingSlotType: 0,
-		parkingSlotRate: 20,
-		parkingSlotId: '620b146162d0ff825d5f46ef',
-		entryPointId: '620b146162d0ff825d5f46ea',
-		parkingComplexId: '620b146162d0ff825d5f46ec',
-		isContinuous: false,
-		isFlatRateConsumed: false
-	};
+	const parkingHistory = [
+		{
+			plateNumber: 'AGL5251',
+			vehicleType: 0,
+			parkingSlotType: 0,
+			parkingSlotRate: 20,
+			parkingSlotId: '620b146162d0ff825d5f46ef',
+			entryPointId: '620b146162d0ff825d5f46ea',
+			parkingComplexId: '620b146162d0ff825d5f46ec',
+			isContinuous: false,
+			isFlatRateConsumed: false
+		}
+	];
 
 	before(async () => {
 		models = await getModels();
@@ -217,7 +219,7 @@ describe('/lib/controllers/park-histories.js', () => {
 		});
 
 		it('should not pass previous time activity if no history record yet', async () => {
-			models.parkingHistories.getByPlateNumber.resolves();
+			models.parkingHistories.getByPlateNumber.resolves([]);
 
 			await parkHistoriesController.execute(
 				'620b146162d0ff825d5f46fc',

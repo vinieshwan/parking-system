@@ -92,17 +92,21 @@ class ParkingHistories {
 	/**
 	 * Get the parking history details by vehicle plate number
 	 * @param {string} plateNumber - Vehicle plate number
+	 * @param {number} limit - Vehicle plate number
 	 * @returns {Promise<Object>}
 	 */
-	getByPlateNumber(plateNumber) {
-		return this.collection.findOne(
-			{ plateNumber },
-			{
-				sort: {
-					parkTime: -1
+	getByPlateNumber(plateNumber, limit = 1) {
+		return this.collection
+			.find(
+				{ plateNumber },
+				{
+					sort: {
+						parkTime: -1
+					}
 				}
-			}
-		);
+			)
+			.limit(limit)
+			.toArray();
 	}
 }
 

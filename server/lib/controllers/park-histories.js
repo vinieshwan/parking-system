@@ -68,7 +68,7 @@ class ParkHistories {
 
 			vehicleDetails.parkingComplexId = parkingComplex._id.toString();
 
-			const parkHistory = await this.models.parkingHistories.getByPlateNumber(
+			const [parkHistory] = await this.models.parkingHistories.getByPlateNumber(
 				plateNumber
 			);
 
