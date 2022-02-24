@@ -159,7 +159,7 @@ class UnparkHistories {
 						parkingSlotRate,
 						dayRate
 					),
-				isFlatRateConsumed
+				isFlatRateConsumed: true
 			};
 		}
 

@@ -36,9 +36,11 @@ _\* `Please note that this system is developed under node v16.13.1`_
   ```
 - To run the tests:
   ```sh
+  cd server
   npm test
   ```
 - To run test coverage:
   ```sh
+  cd server
   npm run test-coverage
   ```
