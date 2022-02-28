@@ -143,10 +143,17 @@ class UnparkHistories {
 		const unParkTimeDiff =
 			Math.ceil(timeDiffInHour(unParkTime, parkTime)) - flatRate.hours;
 
-		if (unParkTimeDiff <= 0) {
+		if (unParkTimeDiff < 0) {
 			return {
 				payable: flatRate.rate,
 				isFlatRateConsumed
+			};
+		}
+
+		if (unParkTimeDiff === 0) {
+			return {
+				payable: flatRate.rate,
+				isFlatRateConsumed: true
 			};
 		}
 
